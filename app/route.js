@@ -4,10 +4,7 @@ const shortID  = require('shortid');
 module.exports = (db, app) => {
   
   const issueSchema = mongoose.Schema({
-    _id: {
-      type: String,
-      default: shortID()
-    },
+    _id: String,
     project_name: String,
     issue_title: String,
     issue_text: String,
@@ -77,6 +74,7 @@ module.exports = (db, app) => {
     
     const issue = new Issue();
     
+    issue._id          = shortID();
     issue.project_name = req.params.project_name;
     issue.issue_title  = req.body.issue_title;
     issue.issue_text   = req.body.issue_text;
@@ -148,6 +146,28 @@ module.exports = (db, app) => {
         
       })
     }
+  });
+  
+  app.route('/api/issues/:project_name')
+     .get((req, res) => {
+    
+    const issues = db.collection('issues');
+      
+    const query = {};
+    
+    Object.keys(req.query).forEach(key => query[key] = req.query[key]);
+    Object.keys(req.body).forEach(key => query[key] = req.body[key]);
+    query.project_name = req.params.project_name;
+    
+    issues.find(query).toArray((err, docs) => {
+      if (err) res.redirect('/');
+      
+      const data = [];
+      
+      docs.forEach(doc => data.push(doc));
+      
+      res.json(data);
+    });
   });
   
   app.use((req, res, next) => {
