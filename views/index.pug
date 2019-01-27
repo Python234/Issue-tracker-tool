@@ -1,0 +1,114 @@
+
+html
+  head
+    title Issue Tracker
+    meta(charset='UTF-8')
+    meta(name='description', content='Issue tracking website')
+    meta(name='keywords', content='Issue tracking, freecodecamp, glitch')
+    meta(name='author', content='Omar S. Karuwa')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet', href='/public/css/index.min.css')
+  body
+    header
+      div
+        h1= 'Issue Tracker'.toUpperCase()
+        p#list-link
+      #clear
+    main
+      div#project-name
+        section#add-project
+          form#new-project(autocomplete='off')
+            .header
+              h2 New Project
+            .inputs
+              label(for='project_name') Name:
+                span *
+              input#project_name(type='text', name='project_name', placeholder='Name of new project', required)
+            .inputs.btn
+              input(type='submit', value='Add')
+
+        section#select-project
+          form
+            .header
+              h2 Select Project
+            div
+              p Use the form above to add Projects.
+              ul
+                if projects
+                  - var item_id = 1
+                  each project in projects
+                    li(id=item_id++)= project
+
+      section#create-issue
+        form#create(autocomplete='off')
+          .header
+            h2 Create new issue
+          .inputs
+            label(for='issue_title_create') Title:
+              span *
+            input#issue_title_create(type='text', placeholder='title of the issue', name='issue_title', required)
+          .inputs
+            label(for='issue_text_create') Issue text:
+              span *
+            textarea#issue_text_create(for='create', name='issue_text', placeholder='issue_text' , required)
+          .inputs
+            label(for='created_by_create') Created by:
+              span *
+            input#created_by_create(type='text', name='created_by', placeholder='created by', required)
+          .inputs
+            label(for='assigned_to_create') Assigned to:
+            input#assigned_to_create(type='text', name='assigned_to', placeholder='(optional)')
+          .inputs
+            label(for='status_text_create') Status text:
+            input#status_text_create(type='text', name='status_text', placeholder='(optional)')
+          .inputs.btn
+            input(type='submit', value='Submit')
+            
+      section#update-issue
+        form#update(autocomplete='off')
+          .header
+            h2 Update issue
+          .inputs
+            label(for='issue_id_update') _id:
+              span *
+            input#issue_id_update(type='text', name='issue_id', placeholder='issue_id', required)
+          .inputs
+            label(for='issue_title_update') Issue title:
+            input#issue_title_update(type='text', name='issue_title', placeholder='(optional)')
+          .inputs
+            label(for='issue_text_update') Issue text:
+            textarea#issue_text_update(for='update', name='issue_text', placeholder='(optional)')
+          .inputs
+            label(for='created_by_update') Created by:
+            input#created_by_update(type='text', name='created_by', placeholder='(optional)')
+          .inputs
+            label(for='assigned_to_update') Assigned to:
+            input#assigned_to_update(type='text', name='assigned_to', placeholder='(optional)')
+          .inputs
+            label(for='status_text_update') Status text:
+            input#status_text_update(type='text', name='status_text', placeholder='(optional)')
+          .inputs
+            label(for='close') Close issue:
+            input#close(type='checkbox', name='closed')
+          .inputs.btn
+            input(type='submit', value='Update')
+        
+      section#delete-form
+        form#delete(autocomplete='off')
+          .header
+            h2 Delete issue
+          .inputs
+            label(for='issue_id_delete') _id:
+              span *
+            input#issue_id_delete(type='text', name='issue_id', placeholder='issue id', required)
+          .inputs.btn
+            input(type='submit', value='Delete')
+            
+    section#response
+      #title.header
+        h2 Response Preview
+      div#response-container.narmal
+        pre#response-text
+     
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+    script(src='/public/js/index.min.js')
